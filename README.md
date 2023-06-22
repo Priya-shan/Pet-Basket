@@ -1,70 +1,41 @@
-# Getting Started with Create React App
+# Pet Basket
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+“Pet Basket !” is an Social Media kind of image sharing application with which you can share stunning moments and interact with other’s content. You can connect with a global community, explore pet content. You can order pet products and inquire about pet adoption. You can also have virtual play date with pets.
 
-## Available Scripts
+## Features
+### Admin Features
 
-In the project directory, you can run:
+1. Verify Users and provide them verification badges
+2. Can review reports and remove posts that are not related to pets
+3. Can review reports and remove users who violate community rules
 
-### `npm start`
+### User Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. Sign Up and create a new account, Login with registered credentials.
+2. Can request verified user status from Admin
+3. Upload pet pictures, videos or pet related content via add new Post
+4. Can Like, Comment, Share and Save Posts
+5. Can follow or follow back accounts of Interest
+6. Can add Pet/Product label while posting and add necessary details like (amount incase of pet products)
+7. Can receive/send pet adoption enquiries
+8. Can receive/place orders for pet products (Supports only COD and no Online Payments)
+9. Can report posts that are not related to pets or report users who violate community rules
+10. Can add Virtual Play Date (VPD) availability for pets while posting and add necessary details like time slots
+11. Can receive/send request for VPD 
+12. Once VPD request is approved respective users can connect through video chat
+13. Can Use Ask Me Anything about Pets (AMA-Pets) to chat with a chatbot to gain any pet related information
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Database Schema
+![image](https://github.com/Priya-shan/Pet-Basket/assets/67195594/5123246c-749f-45ca-8157-7b869b2e02d0)
 
-### `npm test`
+## UI Design
+https://www.figma.com/file/LZao45srTJeaOSSNKFAWCT/Pet-Basket-!?type=design&node-id=0%3A1&t=nq8IzGIl7Kq3AdZi-1
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Implementation
 
-### `npm run build`
+### Techstack
+Frontent - React
+Backend - Asp.Net 
+Database - SQL
+Deployment - Azure
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
