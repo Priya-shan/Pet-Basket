@@ -10,25 +10,33 @@ import {
 
 import { RouterProvider } from 'react-router-dom';
 import { Button } from './components/CustomButton';
+import {inputTheme} from './components/CustomInput'
 import { extendTheme } from '@chakra-ui/react';
 const theme = extendTheme({
   components: {
     Button,
+    Input:inputTheme,
   },
   breakpoints: {
-    custom: "320px",
-    sm:"421px"
+    mobileS:"320px",
+    mobileM:"375px",
+    sm: "425px",
+    md:"768px",
+    lg:"1024px",
+    xl:"1140px",
   },
 })
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <RouterProvider router={routes}>
     <ChakraProvider theme={theme}>
-    <RecoilRoot>
-    <RouterProvider router={routes}></RouterProvider>
-    </RecoilRoot>
+    {/* <RecoilRoot> */}
+    
+    {/* </RecoilRoot> */}
     </ChakraProvider>
+    </RouterProvider>
   </React.StrictMode>
 );
 // If you want to start measuring performance in your app, pass a function

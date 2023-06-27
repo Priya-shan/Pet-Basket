@@ -1,34 +1,44 @@
  
 import { defineStyleConfig } from '@chakra-ui/react'
+import {colors} from '../constants/contants';
 export const Button = defineStyleConfig({
-  // The styles all button have in common
   baseStyle: {
     fontWeight: 'bold',
     textTransform: 'uppercase',
-    borderRadius: 'base', // <-- border radius is same for all variants and sizes
+    borderRadius: '20px', 
+    backgroundColor:colors.primary,
+    px: 4, 
+    py: 3,
+    height:"30px",
   },
   // Two sizes: sm and md
   sizes: {
+    mobileS:{
+        fontSize: 'sm',
+       width:"100px",
+    },
+    mobileM:{
+        fontSize: 'sm',
+        width:"100px",
+    },
     sm: {
-     backgroundColor:"red",
       fontSize: 'sm',
-      px: 4, // <-- px is short for paddingLeft and paddingRight
-      py: 3, // <-- py is short for paddingTop and paddingBottom
+      width:"100px",
     },
     md: {
        
-      fontSize: 'md',
-      px: 6, // <-- these values are tokens from the design system
-      py: 4, // <-- these values are tokens from the design system
+      fontSize: 'sm',
+      width:"150px", 
     },
     lg: {
-        backgroundColor:"blue",
-      fontSize: 'md',
-      px: 6, // <-- these values are tokens from the design system
-      py: 4, // <-- these values are tokens from the design system
+      fontSize: 'sm',
+      width:"150px",
+    },
+    xl: {
+      fontSize: 'sm',
+      width:"200px",
     },
   },
-  // Two variants: outline and solid
   variants: {
     outline: {
       border: '2px solid',
@@ -40,7 +50,6 @@ export const Button = defineStyleConfig({
       color: 'white',
     },
   },
-  // The default size and variant values
   defaultProps: {
     size: 'md',
     variant: 'outline',

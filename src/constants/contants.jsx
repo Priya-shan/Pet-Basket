@@ -1,17 +1,7 @@
-
-
 export const colors ={
         primary:"rgba(225, 204, 236, 1)",
-        primaryLight:"rgba(225, 204, 236, 0.5)"
+        primaryLight:"rgba(225, 204, 236, 0.5)",
+        outline:"#805ad5",
   }
-
-// export const customButton = {
-//       backgroundColor: "#blue",
-//       color: "#fff",
-//       padding: "10px 16px",
-//       borderRadius: "8px",
-//       fontWeight: "bold",
-//       fontSize: "16px",
-//       cursor: "pointer",
-//     };
-
+export const baseUrl="https://localhost:7180/api";
+export const encryptionKey = 'booboomehmehlollol';
