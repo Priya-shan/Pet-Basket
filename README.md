@@ -26,7 +26,8 @@
 13. Can Use Ask Me Anything about Pets (AMA-Pets) to chat with a chatbot to gain any pet related information
 
 ## Database Schema
-![image](https://github.com/Priya-shan/Pet-Basket/assets/67195594/5123246c-749f-45ca-8157-7b869b2e02d0)
+![image](https://github.com/Priya-shan/Pet-Basket/assets/67195594/54d71984-c91b-4a5f-abaa-3c5cef6c8b94)
+
 
 ## UI Design
 https://www.figma.com/file/LZao45srTJeaOSSNKFAWCT/Pet-Basket-!?type=design&node-id=0%3A1&t=nq8IzGIl7Kq3AdZi-1
@@ -35,7 +36,10 @@ https://www.figma.com/file/LZao45srTJeaOSSNKFAWCT/Pet-Basket-!?type=design&node-
 
 ### Techstack
 Frontent - React
+
 Backend - Asp.Net 
+
 Database - SQL
+
 Deployment - Azure
 
