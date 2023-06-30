@@ -1,6 +1,5 @@
 import './App.css';
 import {createBrowserRouter} from 'react-router-dom'
-import LoginPage from './pages/auth/LoginPage';
 import { useRecoilValue } from 'recoil';
 import SignupPage from './pages/auth/SignupPage';
 import {authStatus } from "./recoilAtoms/Auth";

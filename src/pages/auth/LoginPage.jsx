@@ -1,13 +1,14 @@
 import { Box, Flex, Image, Input, Button, Text, Center } from "@chakra-ui/react";
 import AuthImage from '../../images/AuthImage.png'
 import Logo from '../../images/Logo.png'
-import { React, useState } from 'react'
-import { colors, baseUrl,encryptionKey } from "../../constants/contants";
+import { React, useEffect, useState } from 'react'
+import { colors, baseUrl, encryptionKey } from "../../constants/contants";
 import { useNavigate } from 'react-router-dom';
-import { loginFormData, authStatus } from "../../recoilAtoms/Auth";
-import { useRecoilState } from "recoil";
+import { authStatus } from "../../recoilAtoms/Auth";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import axios from "axios";
 import { AES } from 'crypto-js';
+import {toast} from 'react-toastify';
 
 // const authToken = 'example-auth-token';
 
@@ -17,7 +18,7 @@ function LoginPage() {
     username: '',
     password: '',
   });
-  const [_, setAuthStatus] = useRecoilState(authStatus);
+  const setAuthStatus = useSetRecoilState(authStatus);
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -27,23 +28,33 @@ function LoginPage() {
     }));
   };
 
-  function authenticateUser(event) {
+  async function authenticateUser(event) {
     event.preventDefault();
     const { username, password } = formData;
-    axios.get(`${baseUrl}/UserModels/${username}`).then((response) => {
-      console.log(response.data)
-      console.log(`password : ${response.data.password}`);
+    try {
+      const response = await axios.get(`${baseUrl}/User/${username}`);
       if (response.data.password === password) {
         const encryptedUsername = AES.encrypt(username, encryptionKey).toString();
         localStorage.setItem('username', encryptedUsername);
         setAuthStatus({ status: true, userName: username });
+      } else {
+        toast("😨 Password Incorrect");
+        console.log("Password Incorrect");
       }
-      else {
-        setAuthStatus({ status: false, userName: '' });
-        navigate('/');
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        toast("🧐 No Such User Exists");
+        console.log("No such user exists");
+      } else {
+        toast("🤐 An unkown error occured... Try again !");
+        console.log("An error occurred while making the request:", error);
       }
-    });
+    }
   }
+  useEffect(() => {
+    console.log("login page");
+  }, []);
+
   return (
     <Flex height="100vh" direction={{ base: "column", md: "row" }}>
       <Box flex="1" position="relative">
@@ -100,6 +111,7 @@ function LoginPage() {
       </Box>
 
     </Flex>
+    
   );
 };
 

@@ -1,62 +1,46 @@
-import { Box, Flex, Image, Input, Button, Text, Center } from "@chakra-ui/react";
-import AuthImage from '../../images/AuthImage.png'
-import Logo from '../../images/Logo.png'
-import {React, useEffect, useState} from 'react'
-import { colors, baseUrl,encryptionKey } from "../../constants/contants";
-import { useNavigate } from 'react-router-dom';
-import { loginFormData,authStatus } from "../../recoilAtoms/Auth";
-import {useRecoilState } from "recoil";
+import { React, useEffect} from 'react'
+import {baseUrl, encryptionKey } from "../../constants/contants";
+import {authStatus } from "../../recoilAtoms/Auth";
 import axios from "axios";
-import Cookies from 'js-cookie';
 import HomePage from "../user/HomePage";
-import SignupPage from "./SignupPage";
 import { AES } from 'crypto-js';
 import CryptoJS from "crypto-js";
+import LoginPage from "../auth/LoginPage";
+import { useRecoilState} from "recoil";
 
-
-
-function LoginPage() {
-    const [isLoggedIn,setIsLoggedIn]=useState(false);
-
-    useEffect(()=>{
-        const encryptedUsernameFromStorage = localStorage.getItem('username');
-        const decryptedBytes = AES.decrypt(encryptedUsernameFromStorage, encryptionKey);
-        const decryptedUsername = decryptedBytes.toString(CryptoJS.enc.Utf8);
-        // checkUsername(decryptedUsername)
-    
-        },[]);
-    
-    const checkUsername = (username) => {
-        axios
-          .get(`${baseUrl}/UserModel`)
-          .then((response) => {
-            const users = response.data;
-            const isUsernameExists = users.some(user => user.username === username);
-            
-            if (isUsernameExists) {
-              console.log('Username exists in the table');
-              setIsLoggedIn(true);
-            } else {
-              console.log('Username does not exist in the table');
-              setIsLoggedIn(false);
-            }
-          })
-          .catch((error) => {
-            console.error('Error occurred while checking the username:', error);
-          });
+async function checkIfUsernameExists(userName) {
+  console.log("checkusername fn - " + userName);
+  const response = await axios.get(`${baseUrl}/User/${userName}`);
+  if (response.status === 200) {
+    console.log("success");
+    return true;
+  }
+  return false;
+}
+function getDecryptedUsernameFromStorage(encryptedUsernameFromStorage){
+  const decryptedBytes = AES.decrypt(encryptedUsernameFromStorage, encryptionKey);
+  const decryptedUsername = decryptedBytes.toString(CryptoJS.enc.Utf8);
+  return decryptedUsername;
+}
+function LandingPage() {
+  const [authStatuss, setAuthStatus] = useRecoilState(authStatus);
+  useEffect(() => {
+    console.log("landingpage");
+    // console.log(authStatuss);
+    const encryptedUsernameFromStorage = localStorage.getItem("username");
+    if(authStatuss.status==false && encryptedUsernameFromStorage!=null){
+      const userName = getDecryptedUsernameFromStorage(encryptedUsernameFromStorage);
+      const checkStatus = async () => {
+        if (await checkIfUsernameExists(userName)) {
+          setAuthStatus({ status: true, userName: userName });
+        }
       };
-
-  const navigate = useNavigate();
-
-  let componentToRender;
-//   if (isLoggedIn) {
-//     componentToRender = <HomePage />;
-//   } else {
-//     componentToRender = <LoginPage/>
-//   }
+    checkStatus();
+    }
+  }, [authStatuss]);
   return (
-   <>{isLoggedIn ? <div>Hii</div>: <LoginPage/> } </>
+    <> {authStatuss.status ?<HomePage/>: <LoginPage/>} </>
   );
 };
 
-export default LoginPage;
+export default LandingPage;

@@ -12,6 +12,8 @@ import { RouterProvider } from 'react-router-dom';
 import { Button } from './components/CustomButton';
 import {inputTheme} from './components/CustomInput'
 import { extendTheme } from '@chakra-ui/react';
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 const theme = extendTheme({
   components: {
     Button,
@@ -30,14 +32,14 @@ const theme = extendTheme({
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={routes}>
     <ChakraProvider theme={theme}>
-    {/* <RecoilRoot> */}
-    
-    {/* </RecoilRoot> */}
+    <RecoilRoot>
+    <RouterProvider router={routes}></RouterProvider>
+    </RecoilRoot>
+    <ToastContainer/>
     </ChakraProvider>
-    </RouterProvider>
   </React.StrictMode>
+  
 );
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
