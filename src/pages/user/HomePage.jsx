@@ -1,25 +1,70 @@
-import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
-import { useRecoilState} from "recoil";
-import { authStatus } from "../../recoilAtoms/Auth";
+import React, { useEffect, useState } from 'react';
+import { useRecoilState } from "recoil";
+import { authStatus, postsState } from "../../recoilAtoms/Auth";
+import Post from "../../components/Post"
+import AddPostModal from "../../components/AddPostModal"
+import SideBar from "../../components/SideBar"
+import { Center, Flex, Box, VStack } from '@chakra-ui/react';
+import BackgroundImage from "../../images/bg.png"
+import { toast } from 'react-toastify';
+import axios from "axios";
+import { colors, baseUrl } from "../../constants/contants";
+
+
 function HomePage() {
   const [authStatuss, setAuthStatus] = useRecoilState(authStatus);
-  const navigate = useNavigate();
-  function logout(){
+  const [postsStatee, setPostsState] = useRecoilState(postsState);
+  const [posts, setPosts] = useState([]);
+
+
+  function logout() {
     localStorage.removeItem("username");
     console.log("logging out");
     setAuthStatus({ status: false, userName: '' });
   }
-  useEffect(()=>{
-    console.log("homepage");
-  },[]);
-  return (
-    <div>HomePage
-      <br></br>
-      <button onClick={logout}>Logout</button>
-    </div>
-    
-  )
-};
+  async function fetchData() {
+    try {
+      const response = await axios.get(`${baseUrl}/Posts`);
+      console.log(response.data);
+      setPosts(response.data);
+    } catch (error) {
+      toast("🤐 An unknown error occurred... Try again!");
+      console.log("An error occurred while making the request:", error);
+    }
+  }
+  useEffect(() => {
+    console.log("View Posts Page/Home Page");
+    fetchData();
+  }, [postsStatee]);
 
-export default HomePage
+  return (
+    <div >
+      <Flex backgroundImage={BackgroundImage} style={{ backgroundAttachment: 'fixed' }}>
+        <Box position="sticky" left={0} top={0} height="100vh" width="300px" display={{ base: "none", md: "block" }}>
+          <SideBar />
+        </Box>
+        <Box
+          flex="1"
+          overflowY="auto"
+        >
+          <Box justifyContent="center" alignItems="center">
+            <VStack mt={8} justifyContent="center" alignItems="center" >
+              {posts.map((post, index) => (
+                <Post
+                  key={post.postId}
+                  post={post}
+                  margin={20}
+                />
+              ))}
+            </VStack>
+          </Box>
+        </Box>
+      </Flex>
+
+      {/* <button onClick={logout}>Logout</button> */}
+    </div>
+
+  );
+}
+
+export default HomePage;
