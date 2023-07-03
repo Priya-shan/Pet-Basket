@@ -5,3 +5,5 @@ export const colors ={
   }
 export const baseUrl="https://localhost:7180/api";
 export const encryptionKey = 'booboomehmehlollol';
+
+export const staticFilesUrl="https://localhost:7180/uploads/";

@@ -7,3 +7,8 @@ export const authStatus=atom({
         userName:""
     }
 })
+
+export const postsState = atom({
+  key: 'postsState',
+  default: true,
+});

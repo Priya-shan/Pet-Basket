@@ -1,4 +1,5 @@
-import { Box, Flex, Image, Input, Button, Text, Center } from "@chakra-ui/react";
+import { Box, Flex, Image, Input, Button, Text, Center,InputGroup, InputRightElement, IconButton } from "@chakra-ui/react";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import AuthImage from '../../images/AuthImage.png'
 import Logo from '../../images/Logo.png'
 import { React, useState } from 'react'
@@ -9,6 +10,7 @@ import { useRecoilState } from "recoil";
 import axios from "axios";
 import {toast} from 'react-toastify';
 import PasswordStrengthBar from 'react-password-strength-bar';
+import CustomInput from '../../components/ChakraComponents/CustomInput'
 
 
 function SignupPage() {
@@ -23,7 +25,11 @@ function SignupPage() {
   });
   const [_, setAuthStatus] = useRecoilState(authStatus);
   const [password, setPassword] = useState('');
-  
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
   function handleInputChange(event) {
     const { name, value } = event.target;
     if(name==="password"){
@@ -37,9 +43,7 @@ function SignupPage() {
 
   async function createUser(event) {
     event.preventDefault();
-    // Access the form values from the state (formData)
     const { username, password, originalName, email, mobile, address } = formData;
-
     if (
       !username ||
       !password ||
@@ -48,17 +52,13 @@ function SignupPage() {
       !mobile ||
       !address
     ) {
-      // Display an error message or perform any necessary actions
       toast("🥺 Please fill in all fields to proceed");
-      console.log('Please fill in all required fields.');
       return;
     }
-    // Do something with the form values
     try {
       const response = await axios.get(`${baseUrl}/User/${username}`);
       if (response.status === 200) {
         toast("😐 This username is already taken");
-        console.log("This username is already taken");
       }
     } catch (error) {
       if (error.response && error.response.status === 404) {
@@ -88,16 +88,15 @@ function SignupPage() {
   }
 
   return (
-    <Flex height="100vh" direction={{ base: "column-reverse", md: "row" }} >
+    <Flex height="100vh" direction={{ base: "column", md: "row" }} >
 
-      <Box flex="1" bg={colors.primaryLight}>
-        {/* Login Form */}
+      <Box flex="1" bg={`linear-gradient(90deg, #f5e4fe, #f8edfe, #fcf6ff)`}>
         <Center height={{ md: "100vh" }}>
-          <Box maxW="sm" mx="auto" p={8} >
+          <Box width="70%" mx={10} p={0} >
             <Image
               src={Logo}
             />
-            <Input
+            <CustomInput
               required
               placeholder="Username"
               mb={4}
@@ -105,14 +104,31 @@ function SignupPage() {
               value={formData.username}
               onChange={handleInputChange}
             />
-            <Input
-              required
-              isRequired
-              placeholder="Password"
-              name="password"
-              type="password" mb={0}
-              value={formData.password}
-              onChange={handleInputChange} />
+            <InputGroup >
+            <CustomInput
+                placeholder="Password"
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                mb={0}
+                value={formData.password}
+                onChange={handleInputChange} 
+                flexShrink={0}
+                width="100%"/>
+             <InputRightElement 
+              width="2.5rem">
+                <IconButton
+                bg='#00000000'
+                  size="sm"
+                  variant="ghost"
+                  color="gray.500"
+                  _hover={{bg:'#00000000'}}
+                  width={30}
+                  icon={showPassword ? <FaEyeSlash /> : <FaEye />}
+                  onClick={handleTogglePassword}
+                  flexShrink={0}
+                />
+              </InputRightElement>
+            </InputGroup>
             <PasswordStrengthBar
                 style={{
                   marginTop: '0px',
@@ -120,7 +136,7 @@ function SignupPage() {
                   margin: '0px 10px',
                 }}
                 password={password}/>
-            <Input
+            <CustomInput
               required
               placeholder="Name"
               mb={4}
@@ -128,20 +144,20 @@ function SignupPage() {
               value={formData.originalName}
               onChange={handleInputChange}
             />
-            <Input
+            <CustomInput
               placeholder="Email"
               name="email"
               type="email" mb={6}
               value={formData.email}
               onChange={handleInputChange} />
-            <Input
+            <CustomInput
               placeholder="Mobile"
               mb={4}
               name="mobile"
               value={formData.mobile}
               onChange={handleInputChange}
             />
-            <Input
+            <CustomInput
               placeholder="Address"
               name="address"
               mb={6}
@@ -150,11 +166,14 @@ function SignupPage() {
             <Button size="md" width="full" onClick={createUser}>
               Sign In
             </Button>
+            <Center> <Text display={{base:"flex",md:"none"}} >Already a Member ? <a href="/" ><Text textDecoration="underline">Login</Text> </a></Text></Center>
           </Box>
         </Center>
+
       </Box>
-      <Box flex="1" position="relative">
+      <Box flex="1" position="relative" display={{base:"none",md:"flex"}} bg="#fcf6ff">
         <Image
+          borderRadius="25% 0 0 25%"
           src={AuthImage}
           alt="Login Image"
           w="100%"
@@ -168,7 +187,7 @@ function SignupPage() {
           textAlign="center"
           color="white"
         >
-          <Text fontSize={{ mobileS: "15px", mobileM: "15px", sm: "20px", md: "20px", lg: "20px" }} fontWeight="bold" mb={2} color={"black"}>
+          <Text fontSize={{ mobileS: "15px", mobileM: "15px", sm: "20px", md: "20px", lg: "20px" }} fontWeight={400} mb={2} color={"black"} >
             Already a Member, Please Login?
           </Text>
           <Button size={{ mobileS: "mobileS", mobileM: "mobileM", sm: "sm", md: "md", lg: "lg", xl: "xl" }} onClick={() => {
@@ -178,6 +197,7 @@ function SignupPage() {
           </Button>
         </Box>
       </Box>
+      
     </Flex>
   );
 };

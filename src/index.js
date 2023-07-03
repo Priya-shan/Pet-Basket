@@ -9,15 +9,13 @@ import {
 } from 'recoil';
 
 import { RouterProvider } from 'react-router-dom';
-import { Button } from './components/CustomButton';
-import {inputTheme} from './components/CustomInput'
+import { Button } from './components/ChakraComponents/CustomButton';
 import { extendTheme } from '@chakra-ui/react';
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 const theme = extendTheme({
   components: {
     Button,
-    Input:inputTheme,
   },
   breakpoints: {
     mobileS:"320px",
@@ -26,6 +24,20 @@ const theme = extendTheme({
     md:"768px",
     lg:"1024px",
     xl:"1140px",
+  },
+  colors: {
+    brand: {
+      100: "#f8edfe",
+      200: '#f5e4fe',
+      300: '#f1dbfd',
+      400: '#eed2fd',
+      500: '#ebc8fd',
+      600: '#e7bffc',
+      700: '#e4b6fc',
+      800: '#e0adfb',
+      900: "#dda4fb",
+      1000: "#6f527e"
+    },
   },
 })
 
