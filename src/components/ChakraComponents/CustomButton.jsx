@@ -17,15 +17,18 @@ export const Button = defineStyleConfig({
   sizes: {
     mobileS:{
         fontSize: 'sm',
-       width:"100px",
+       width:"80px",
+       px:2
     },
     mobileM:{
         fontSize: 'sm',
-        width:"100px",
+        width:"80px",
+        px:2
     },
     sm: {
       fontSize: 'sm',
-      width:"100px",
+      width:"80px",
+      px:2
     },
     md: {
        

@@ -37,6 +37,7 @@ function AddPostModal({ closeModal }) {
     vpdDescription: '',
   });
   const [postsStatee, setPostsState] = useRecoilState(postsState);
+  
   const handleOpen = () => {
     setIsOpen(true);
   };
@@ -50,7 +51,6 @@ function AddPostModal({ closeModal }) {
     const file = event.target.files[0];
     setShowSelectedImage(URL.createObjectURL(file));
     setSelectedImage(file);
-
   };
 
   const handleRadioChange = (value) => {
@@ -168,7 +168,7 @@ function AddPostModal({ closeModal }) {
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody overflowY="scroll" maxHeight="65vh">
-            <Grid templateColumns="repeat(2, 1fr)" gap={4}>
+            <Grid templateColumns={{base:"repeat(1,1fr)",md:"repeat(2, 1fr)"}} gap={4}>
               <GridItem>
                 <Center>
                   <Box mb={3}>
@@ -176,7 +176,7 @@ function AddPostModal({ closeModal }) {
                   </Box>
                 </Center>
                 <Center>
-                  <Box display={"flex"} >
+                  <Box display={"flex"} flexDirection={{base:"column",md:"row"}}>
                     <RadioGroup defaultValue="pet" onChange={handleRadioChange}>
                       <Grid templateColumns="repeat(2, 1fr)" gap={2}>
                         <Radio value="pet" colorScheme='brand' border={'1px solid black'}>Pet </Radio>

@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
-import { Box, Flex, Avatar, IconButton, Icon, Text, Center, Image, Menu, MenuButton, MenuList, MenuItem, Spacer, Button } from '@chakra-ui/react';
+import React, { useEffect,useState } from 'react';
+import { Box, Flex, Avatar, IconButton, Icon, Text, Center, Image, Menu, MenuButton, MenuList, MenuItem, Spacer, Button, HStack } from '@chakra-ui/react';
 import { FaHeart, FaComment, FaShare, FaSave, FaEllipsisV, FaTrash } from 'react-icons/fa';
 import { staticFilesUrl } from "../constants/contants"
 import { deletePost } from '../api/posts';
 import { postsState } from "../recoilAtoms/Auth";
 import { useRecoilState } from "recoil";
+import PetDetailsModal from './PetDetailsModal';
+import VpdDetailsModal from './VpdDetailsModal';
+import ProductDetailsModal from "./ProductDetailsModal";
 
 function liked() {
   alert("liked");
@@ -16,30 +19,32 @@ function Post(props) {
     margin
   } = props;
   const [postsStatee, setPostsState] = useRecoilState(postsState);
+  const [isPetModalOpen, setIsPetModalOpen] = useState(false);
+  const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+  const [isVpdModalOpen, setIsVpdModalOpen] = useState(false);
+
+  
+  const openPetModal = () => { setIsPetModalOpen(true)};
+  const closePetModal = () => { setIsPetModalOpen(false)};
+  const openProductModal = () => { setIsProductModalOpen(true)};
+  const closeProductModal = () => { setIsProductModalOpen(false)};
+  const openVpdModal = () => { setIsVpdModalOpen(true)};
+  const closeVpdModal = () => { setIsVpdModalOpen(false)};
+
   async function postDelete() {
     const deleteResponse = await deletePost(post.postId);
     console.log(deleteResponse);
     setPostsState(!postsStatee);
   }
-
-  function vpdRequest() {
-    alert("Vpd Request");
-  }
-  function petRequest() {
-    alert("pet Request");
-  }
-  function productRequest() {
-    alert("product Request");
-  }
-
   useEffect(() => {
     console.log("Posts Component");
   }, []);
 
 
   return (
+    <>
     <Center>
-      <Box p={4} borderWidth={1} borderRadius="md" mb={4} width={400} backgroundColor={'white'}>
+      <Box p={4} borderWidth={1} borderRadius="md" mb={4} width={{base:"300px",sm:"350px",lg:"400px"}} backgroundColor={'white'}>
         <Flex align="center" mb={2} height={'100%'}>
           <Avatar size="xs" name={post.user.userName} src={post.user.profileImageUri} />
           <Box>
@@ -49,15 +54,15 @@ function Post(props) {
 
           <Spacer />
           {post.label === "pet" && post.status && post.pet?.virtualPlayDateStatus && (
-            <Box><Text _hover={{ cursor: "pointer" }} onClick={vpdRequest}>⚡</Text></Box>
+            <Box><Text _hover={{ cursor: "pointer" }} onClick={openVpdModal}>⚡</Text></Box>
           )}
           <Spacer />
           {post.label === "pet" && post.status && (
-            <Box><Button size={'sm'} _hover={{ cursor: "pointer" }} onClick={vpdRequest}>Adopt</Button></Box>
+            <Box><Button size={'sm'} _hover={{ cursor: "pointer" }} onClick={openPetModal}>Adopt</Button></Box>
           )}
           <Spacer />
           {post.label === "product" && post.status && (
-            <Box><Button size={'sm'} _hover={{ cursor: "pointer" }} onClick={vpdRequest} >₹{post.product?.price}</Button></Box>
+            <Box><Button size={'sm'} _hover={{ cursor: "pointer" }} onClick={openProductModal}> ₹{post.product?.price}</Button></Box>
           )}
           <Menu>
             <MenuButton
@@ -115,29 +120,40 @@ function Post(props) {
           </Flex>
           <IconButton
             variant="ghost"
-            colorScheme="gray"
+            colorScheme="transperent"
             aria-label="Save"
             icon={<Icon as={FaSave} />}
             width={50}
           />
         </Flex>
-        <Text fontWeight="bold" mb={2} textAlign={'left'}>Liked by <Text as="span" fontWeight="normal">_.ashwin_raj._</Text> and 10 others</Text>
+        <HStack>
+        <Text fontWeight="bold" textAlign={'left'}>Liked by  </Text>
+        <Text  fontWeight="normal">_.ashwin_raj._</Text>
+        <Text>and 10 others</Text>
+        </HStack>
+        
 
-        <Text mb={2} textAlign={'left'}>
+        <Box mb={2} textAlign={'left'}>
           <Text fontWeight="bold" as={'span'} >{post.user.userName}</Text>
           {post.caption}
-        </Text>
+        </Box>
 
         <Text color="gray.500" textAlign={'left'}>View all 5 comments</Text>
         <Flex align="left" mt={2} >
           <Avatar size="xs" name="_.ashwin_raj._" src="https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png" />
-          <Text ml={2} fontSize="sm" textAlign={'left'}>
-            <Text fontWeight="bold" as="span">{"comments[0].user"}</Text>
-            {"comments[0].comment"}
-          </Text>
+          <Box ml={2} fontSize="sm" textAlign={'left'}>
+            <Text fontWeight="bold" as="span">{"comments[0].user"} </Text>
+            <Text fontWeight={400}> This is a sample comment</Text>
+          </Box>
         </Flex>
       </Box>
     </Center>
+
+    {isPetModalOpen && <PetDetailsModal closeModal={closePetModal} post={post}/>}
+    {isProductModalOpen && <ProductDetailsModal closeModal={closeProductModal} post={post} />}
+    {isVpdModalOpen && <VpdDetailsModal closeModal={closeVpdModal} post={post} />}
+
+    </>
   );
 };
 

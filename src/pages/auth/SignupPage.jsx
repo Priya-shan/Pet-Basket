@@ -75,6 +75,7 @@ function SignupPage() {
             verified: false
           });
           setAuthStatus({ status: true, userName: response.data.userName });
+          navigate("/");
           console.log(response.data);
         }
         catch (error) {
