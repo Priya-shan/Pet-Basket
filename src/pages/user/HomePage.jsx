@@ -17,12 +17,6 @@ function HomePage() {
   const [postsStatee, setPostsState] = useRecoilState(postsState);
   const [posts, setPosts] = useState([]);
 
-
-  function logout() {
-    localStorage.removeItem("username");
-    console.log("logging out");
-    setAuthStatus({ status: false, userName: '' });
-  }
   async function fetchData() {
     try {
       const response = await axios.get(`${baseUrl}/Posts`);
@@ -65,7 +59,6 @@ function HomePage() {
         </Box>
       </Flex>
       
-      <Button onClick={logout}>Logout</Button>
     </div>
 
   );

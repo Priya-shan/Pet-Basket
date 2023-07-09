@@ -5,11 +5,9 @@ import SignupPage from './pages/auth/SignupPage';
 import { authStatus } from "./recoilAtoms/Auth";
 import HomePage from './pages/user/HomePage';
 import LandingPage from './pages/auth/LandingPage'
+import Activities from './pages/user/Activities';
+import Profile from "./pages/user/Profile";
 
-// function CheckIsAuth() {
-//   var isAuthenticated = useRecoilValue(authStatus);
-//   return isAuthenticated;
-// }
 export const routes = createBrowserRouter([
   {
     path: "/",
@@ -22,6 +20,14 @@ export const routes = createBrowserRouter([
   {
     path: "/home",
     element: <HomePage />
+  },
+  {
+    path: "/activities",
+    element: <Activities/>
+  },
+  {
+    path: "/profile",
+    element: <Profile/>
   },
   
 ]);

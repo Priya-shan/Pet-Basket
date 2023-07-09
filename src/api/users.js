@@ -6,6 +6,7 @@ export async function fetchUsers(){
 }
 
 export async function fetchUserById(userId){
+    console.log("enetred req");
     return axios.get(`${baseUrl}/User/${userId}`);
 }
 
