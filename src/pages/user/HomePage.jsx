@@ -4,7 +4,7 @@ import { authStatus, postsState } from "../../recoilAtoms/Auth";
 import Post from "../../components/Post"
 import AddPostModal from "../../components/AddPostModal"
 import SideBar from "../../components/SideBar"
-import { Center, Flex, Box, VStack, Button } from '@chakra-ui/react';
+import { Center, Flex, Box, VStack, Button ,Spacer} from '@chakra-ui/react';
 import BackgroundImage from "../../images/bg.png"
 import { toast } from 'react-toastify';
 import axios from "axios";
@@ -56,6 +56,7 @@ function HomePage() {
               ))}
             </VStack>
           </Box>
+          <Spacer mb={"60px"}></Spacer>
         </Box>
       </Flex>
       

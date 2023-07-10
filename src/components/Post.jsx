@@ -103,7 +103,8 @@ function Post(props) {
     const likeResponse = await fetchLikes();
     const likesArray = Object.values(likeResponse.data);
     const likedEntries = await likesArray.filter((entry) => entry.postId === post.postId);
-    if (likedEntries)
+    console.log(likedEntries);
+    if (likedEntries && likedEntries.length>0)
       setLikeData({ user: likedEntries[0].userName || '', count: likedEntries.length || 0 });
   }
 
@@ -152,6 +153,7 @@ function Post(props) {
 
     setComments(commentsByPost);
     setCommentCount(commentsByPost.length);
+    console.log("comment count "+commentCount);
 
   }
 
@@ -162,6 +164,9 @@ function Post(props) {
     getComments();
   }, []);
 
+  useEffect(()=>{
+    console.log("comment count "+commentCount);
+  },[commentCount])
   return (
     <>
       <Center>
@@ -269,7 +274,7 @@ function Post(props) {
               onClick={isSaved ? unsavePost : savePost}
             />
           </Flex>
-          <HStack>
+          <HStack fontSize={12}>
             <Text fontWeight="bold" textAlign={'left'}>Liked by  </Text>
             <Text fontWeight="normal">{likeData.user}</Text>
             <Text>and {likeData.count} others</Text>
@@ -280,7 +285,7 @@ function Post(props) {
             <Text fontWeight="bold" as={'span'} >{post.user.userName}</Text>
             {post.caption}
           </Box>
-          {commentCount  &&  (
+          {commentCount > 0  &&  (
             <>
             <Text color="gray.500" textAlign={'left'} onClick={handleOpenDrawer} cursor={'pointer'}>View all {commentCount} comments</Text>
             <Flex align="left" mt={2} >
