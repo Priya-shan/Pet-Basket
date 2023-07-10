@@ -12,6 +12,8 @@ import VpdDetailsModal from './VpdDetailsModal';
 import ProductDetailsModal from "./ProductDetailsModal";
 import { addLike, fetchLikes, deleteLike } from '../api/likes';
 import { addSavedPost, fetchSavedPosts, deleteSavedPost } from '../api/savedpost';
+import CommentDrawer from './CommentDrawer';
+import { fetchComments } from '../api/comments';
 
 function Post(props) {
   const {
@@ -26,8 +28,16 @@ function Post(props) {
   const [isLiked, setIsLiked] = useState(false);
   const [likeData, setLikeData] = useState({ user: "", count: 0 });
   const [isSaved, setIsSaved] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [comments, setComments] =useState([]);
+  const [commentCount, setCommentCount] =useState(0);
 
-
+  const handleOpenDrawer = () => {
+    setIsDrawerOpen(true);
+  };
+  const handleCloseDrawer = () => {
+    setIsDrawerOpen(false);
+  };
   const openPetModal = () => { setIsPetModalOpen(true) };
   const closePetModal = () => { setIsPetModalOpen(false) };
   const openProductModal = () => { setIsProductModalOpen(true) };
@@ -40,12 +50,15 @@ function Post(props) {
     console.log(deleteResponse);
     setPostsState(!postsStatee);
   }
+
   function reportPost() {
     alert("report Post !");
   }
+
   function unfollowUser() {
     alert("unfollow user !");
   }
+
   async function liked() {
     setIsLiked(true);
     const likeModel = {
@@ -132,12 +145,22 @@ function Post(props) {
     }
   }
 
+  async function getComments(){
+    const commentResponse = await fetchComments();
+    const commentsArray = Object.values(commentResponse.data);
+    const commentsByPost = await commentsArray.filter((entry) => entry.postId === post.postId);
+
+    setComments(commentsByPost);
+    setCommentCount(commentsByPost.length);
+
+  }
+
   useEffect(() => {
     checkIfLiked();
     checkIfSaved();
     getTotalLikeCount();
+    getComments();
   }, []);
-
 
   return (
     <>
@@ -223,6 +246,7 @@ function Post(props) {
                 </Box>}
                 mr={2}
                 width={10}
+                onClick={handleOpenDrawer}
               />
               <IconButton
                 variant="ghost"
@@ -256,21 +280,27 @@ function Post(props) {
             <Text fontWeight="bold" as={'span'} >{post.user.userName}</Text>
             {post.caption}
           </Box>
-
-          <Text color="gray.500" textAlign={'left'}>View all 5 comments</Text>
-          <Flex align="left" mt={2} >
-            <Avatar size="xs" name="_.ashwin_raj._" src="https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png" />
-            <Box ml={2} fontSize="sm" textAlign={'left'}>
-              <Text fontWeight="bold" as="span">{"comments[0].user"} </Text>
-              <Text fontWeight={400}> This is a sample comment</Text>
-            </Box>
-          </Flex>
+          {commentCount  &&  (
+            <>
+            <Text color="gray.500" textAlign={'left'} onClick={handleOpenDrawer} cursor={'pointer'}>View all {commentCount} comments</Text>
+            <Flex align="left" mt={2} >
+              <Avatar size="xs" name={comments && comments[0]?.userName} src={post.user.profileImageUri} />
+              <Box ml={2} fontSize="sm" textAlign={'left'}>
+              <Text fontWeight="bold" as="span">{comments && comments[0]?.userName}</Text>
+  <Text fontWeight={400}>{comments && comments[0]?.commentText}</Text>
+  
+              </Box>
+            </Flex>
+            </>
+          )}
+          
         </Box>
       </Center>
 
       {isPetModalOpen && <PetDetailsModal closeModal={closePetModal} post={post} />}
       {isProductModalOpen && <ProductDetailsModal closeModal={closeProductModal} post={post} />}
       {isVpdModalOpen && <VpdDetailsModal closeModal={closeVpdModal} post={post} />}
+      <CommentDrawer isOpen={isDrawerOpen} onClose={handleCloseDrawer} postId={post.postId}/>
 
     </>
   );
