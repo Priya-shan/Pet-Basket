@@ -23,6 +23,7 @@ function AddPostModal({ closeModal }) {
   const [showSelectedImage, setShowSelectedImage] = useState(samplePostImage);
   const fileInputRef = useRef(null);
   const [selectedRadio, setSelectedRadio] = useState('pet');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     caption: '',
     petName: '',
@@ -70,6 +71,7 @@ function AddPostModal({ closeModal }) {
 
   async function handlePost(event){
     event.preventDefault();
+    setIsSubmitting(true);
     try {
       // puts an entry in post table
       const postModal={
@@ -141,6 +143,7 @@ function AddPostModal({ closeModal }) {
     }
 
     handleClose();
+    setIsSubmitting(false);
   };
 
   useEffect(() => {
@@ -163,7 +166,7 @@ function AddPostModal({ closeModal }) {
           <ModalHeader>
             <Box display="flex" justifyContent="flex-end">
               <Button mr={4} onClick={() => fileInputRef.current.click()}>Select File</Button>
-              <Button mr={8} type='submit'>Post</Button>
+              <Button mr={8} disabled={isSubmitting} type='submit'>Post</Button>
             </Box>
           </ModalHeader>
           <ModalCloseButton />

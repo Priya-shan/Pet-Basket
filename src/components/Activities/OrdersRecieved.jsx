@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Box, Flex, Text, Image, IconButton, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, chakra } from "@chakra-ui/react";
+import { Box, Flex, Text, Image, IconButton, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, chakra, Button } from "@chakra-ui/react";
 import { FaPaw } from "react-icons/fa";
 import{ BsFillBagFill} from "react-icons/bs"
 import {AiOutlineUser} from "react-icons/ai"
@@ -65,6 +65,7 @@ function OrdersReceived({data}) {
         w={2}
         onClick={() => handleViewDetails(item)}
       />
+      <Button size={'sm'} fontSize={10} w={100}>Complete Order</Button>
     </Flex>
   ))
 ) : (

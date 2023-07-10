@@ -12,3 +12,9 @@ export const postsState = atom({
   key: 'postsState',
   default: true,
 });
+
+export const refreshComments = atom({
+  key: 'commentState',
+  default: true,
+});
+

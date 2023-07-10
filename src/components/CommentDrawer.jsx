@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Drawer, Text, Flex, Spacer, Input, DrawerBody, IconButton, Box, Icon, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, Button, List, ListItem, DrawerFooter } from '@chakra-ui/react';
-import { authStatus } from '../recoilAtoms/Auth';
+import { authStatus,refreshComments } from '../recoilAtoms/Auth';
 import { addComment, deleteComment, fetchComments } from '../api/comments';
 import { addReply, deleteReply } from '../api/replies';
 import { useRecoilState } from "recoil";
@@ -14,6 +14,7 @@ function CommentDrawer({ isOpen, onClose, postId }) {
     const [commentText, setcommentText] = useState("");
     const [replyText, setReplyText] = useState("");
     const [authStatuss, setAuthStatus] = useRecoilState(authStatus);
+    const [refreshComment, setRefreshComment] = useRecoilState(refreshComments);
     const [comments, setComments] = useState([]);
 
 
@@ -27,6 +28,7 @@ function CommentDrawer({ isOpen, onClose, postId }) {
         const commentsArray = Object.values(commentResponse.data);
         const commentsByPost = await commentsArray.filter((entry) => entry.postId === postId);
         setComments(commentsByPost);
+        setRefreshComment(!refreshComment);
     }
 
     async function postReply(commentId) {
@@ -86,6 +88,7 @@ function CommentDrawer({ isOpen, onClose, postId }) {
                     <DrawerBody>
                         <List spacing={2}>
                             {comments.map((comment) => (
+                                <Box backgroundColor={'brand.200'} padding={2} borderRadius={10}>
                                 <ListItem key={comment.commentId}>
                                     <strong>{comment.userName}</strong> {comment.commentText}
                                     {comment.userName === authStatuss.userName && (
@@ -122,6 +125,7 @@ function CommentDrawer({ isOpen, onClose, postId }) {
 
                                     </List>
                                 </ListItem>
+                                </Box>
                             ))}
                         </List>
                     </DrawerBody>

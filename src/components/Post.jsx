@@ -5,7 +5,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs"
 import { staticFilesUrl } from "../constants/contants"
 import { deletePost } from '../api/posts';
-import { authStatus, postsState } from "../recoilAtoms/Auth";
+import { authStatus, postsState,refreshComments } from "../recoilAtoms/Auth";
 import { useRecoilState } from "recoil";
 import PetDetailsModal from './PetDetailsModal';
 import VpdDetailsModal from './VpdDetailsModal';
@@ -31,6 +31,7 @@ function Post(props) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [comments, setComments] =useState([]);
   const [commentCount, setCommentCount] =useState(0);
+  const [refreshComment, setRefreshComment] = useRecoilState(refreshComments);
 
   const handleOpenDrawer = () => {
     setIsDrawerOpen(true);
@@ -46,6 +47,7 @@ function Post(props) {
   const closeVpdModal = () => { setIsVpdModalOpen(false) };
 
   async function postDelete() {
+    console.log("post delete ",post.postId);
     const deleteResponse = await deletePost(post.postId);
     console.log(deleteResponse);
     setPostsState(!postsStatee);
@@ -100,12 +102,12 @@ function Post(props) {
   }
 
   async function getTotalLikeCount() {
+    console.log("entered get total like count");
     const likeResponse = await fetchLikes();
     const likesArray = Object.values(likeResponse.data);
     const likedEntries = await likesArray.filter((entry) => entry.postId === post.postId);
-    console.log(likedEntries);
-    if (likedEntries && likedEntries.length>0)
-      setLikeData({ user: likedEntries[0].userName || '', count: likedEntries.length || 0 });
+    console.log("liked entries", likedEntries);
+    setLikeData({ user: likedEntries.length>0 ? likedEntries[0].userName : '', count: likedEntries? likedEntries.length : 0 });
   }
 
   async function getLikes() {
@@ -167,6 +169,11 @@ function Post(props) {
   useEffect(()=>{
     console.log("comment count "+commentCount);
   },[commentCount])
+
+  useEffect(()=>{
+    getComments();
+    console.log("comment Status changed");
+  },[refreshComment])
   return (
     <>
       <Center>
@@ -274,7 +281,7 @@ function Post(props) {
               onClick={isSaved ? unsavePost : savePost}
             />
           </Flex>
-          <HStack fontSize={12}>
+          <HStack fontSize={{'base':13, 'md':15, 'lg':16}}>
             <Text fontWeight="bold" textAlign={'left'}>Liked by  </Text>
             <Text fontWeight="normal">{likeData.user}</Text>
             <Text>and {likeData.count} others</Text>
@@ -282,8 +289,8 @@ function Post(props) {
 
 
           <Box mb={2} textAlign={'left'}>
-            <Text fontWeight="bold" as={'span'} >{post.user.userName}</Text>
-            {post.caption}
+            <Text fontWeight="bold" as={'span'} >{post.user.userName} </Text>
+             {post.caption}
           </Box>
           {commentCount > 0  &&  (
             <>

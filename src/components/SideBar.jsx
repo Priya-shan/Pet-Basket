@@ -40,20 +40,22 @@ const Sidebar = () => {
         </VStack>
       </Box>
       <Flex
+        display={{ base: "flex", md: "none" }}
         bg="brand.300"
         w="100%"
         p={2}
         pos="fixed"
         bottom={0}
         left={0}
-        display={{ base: "flex", md: "none" }}
         justifyContent="space-around"
+        mt={"50px"}
       >
         <IconButton
           aria-label="Home"
           icon={<FaHome />}
           colorScheme="white"
           width={1}
+          onClick={()=> navigate("/")}
         />
        
         <IconButton
@@ -61,7 +63,8 @@ const Sidebar = () => {
           icon={<FaQuestion />}
           colorScheme="white"
           width={1}
-        />
+          onClick={() => navigate("/activities")}>
+          </IconButton>
         <IconButton
           aria-label="Notifications"
           icon={<FaBell />}
@@ -92,6 +95,7 @@ const Sidebar = () => {
           icon={<FaUser />}
           colorScheme="white"
           width={1}
+          onClick={() => navigate("/profile", { state: { value: authStatuss.userName } })}
         />
       </Flex>
 
