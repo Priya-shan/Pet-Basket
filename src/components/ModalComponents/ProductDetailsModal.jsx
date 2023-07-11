@@ -3,12 +3,12 @@ import {
     Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Stack,
     FormControl, FormLabel, Input, Textarea, Image, Text, Heading, HStack, Spacer, Flex, Center
 } from '@chakra-ui/react';
-import CustomInput from './ChakraComponents/CustomInput';
-import { staticFilesUrl } from '../constants/contants';
-import { authStatus } from "../recoilAtoms/Auth";
+import CustomInput from '../ChakraComponents/CustomInput';
+import { staticFilesUrl } from '../../constants/contants';
+import { authStatus } from "../../recoilAtoms/Auth";
 import { useRecoilState } from "recoil";
-import { updateUser, fetchUserById } from '../api/users';
-import { addOrder } from '../api/orders';
+import { updateUser, fetchUserById } from '../../api/users';
+import { addOrder } from '../../api/orders';
 function VpdDetailsModal({ closeModal, post }) {
     const [isOpen, setIsOpen] = useState(false);
     const [quantity, setquantity] = useState(1);

@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Box, Button, FormControl, FormLabel, Grid, GridItem, Input, Modal, ModalBody, ModalCloseButton, ModalContent,
         Text, ModalHeader, ModalOverlay, Radio, RadioGroup, Textarea, Switch, Flex, Center,} from '@chakra-ui/react';
-import samplePostImage from '../images/samplePostImage.png';
-import ProfileImageSample from '../images/ProfileImage1.png';
+import samplePostImage from '../../images/samplePostImage.png';
+import ProfileImageSample from '../../images/ProfileImage1.png';
 import { useRecoilState,useRecoilValue } from "recoil";
-import { authStatus,postsState } from "../recoilAtoms/Auth";
-import CustomInput from '../components/ChakraComponents/CustomInput'
+import { authStatus,postsState } from "../../recoilAtoms/Auth";
+import CustomInput from '../ChakraComponents/CustomInput'
 import { toast } from 'react-toastify';
-import { addPost} from '../api/posts';
-import { addPet } from '../api/pets';
-import { addProduct } from '../api/products';
-import { addVpd } from '../api/virtualPlayDates';
-import { addVpdTimeSlot } from '../api/vpdTimeSlots';
+import { addPost} from '../../api/posts';
+import { addPet } from '../../api/pets';
+import { addProduct } from '../../api/products';
+import { addVpd } from '../../api/virtualPlayDates';
+import { addVpdTimeSlot } from '../../api/vpdTimeSlots';
 
 function AddPostModal({ closeModal }) {
   const authUser=useRecoilValue(authStatus);

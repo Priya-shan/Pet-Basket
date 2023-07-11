@@ -3,7 +3,7 @@ import {
     Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Stack,
     FormControl, FormLabel, Input, Textarea, Image, Text, Heading, HStack, Flex, Spacer
 } from '@chakra-ui/react';
-import { staticFilesUrl } from '../constants/contants';
+import { staticFilesUrl } from '../../constants/contants';
 function VpdDetailsModal({ closeModal, post }) {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedButton, setSelectedButton] = useState('');

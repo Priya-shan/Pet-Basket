@@ -5,7 +5,7 @@ import{ BsFillBagFill} from "react-icons/bs"
 import {AiOutlineUser} from "react-icons/ai"
 import { staticFilesUrl } from "../../constants/contants"
 import { useNavigate } from 'react-router-dom';
-import EmptyComponent from './EmptyComponent';
+import EmptyComponent from '../ActivityComponents/EmptyComponent';
 function OrdersReceived({data}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedProduct, setSelectedProduct] = React.useState(null);

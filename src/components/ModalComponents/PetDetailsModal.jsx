@@ -3,13 +3,13 @@ import {
   Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Stack,
   FormControl, FormLabel, Input, Textarea, Image, Text, Heading
 } from '@chakra-ui/react';
-import cardImage from "../images/CardImage.png"
-import CustomInput from './ChakraComponents/CustomInput';
-import { staticFilesUrl } from '../constants/contants';
-import { authStatus } from "../recoilAtoms/Auth";
+import cardImage from "../../images/CardImage.png"
+import CustomInput from '../ChakraComponents/CustomInput';
+import { staticFilesUrl } from '../../constants/contants';
+import { authStatus } from "../../recoilAtoms/Auth";
 import { useRecoilState } from "recoil";
-import { updateUser, fetchUserById } from '../api/users';
-import { addEnquiry } from '../api/adoptionEnquiries';
+import { updateUser, fetchUserById } from '../../api/users';
+import { addEnquiry } from '../../api/adoptionEnquiries';
 import { toast } from 'react-toastify';
 function PetDetailsModal({ closeModal, post }) {
   const [isOpen, setIsOpen] = useState(false);

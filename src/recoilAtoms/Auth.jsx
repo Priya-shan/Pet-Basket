@@ -18,3 +18,7 @@ export const refreshComments = atom({
   default: true,
 });
 
+export const loader = atom({
+  key:'loader',
+  default:false,
+})

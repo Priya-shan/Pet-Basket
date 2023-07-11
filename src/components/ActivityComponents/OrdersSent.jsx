@@ -6,7 +6,7 @@ import CardImage from "../../images/CardImage.png"
 import { staticFilesUrl } from "../../constants/contants"
 import { useNavigate } from 'react-router-dom';
 import { fetchPostById } from '../../api/posts';
-import Post from '../Post';
+import Post from '../IndividualComponents/Post';
 import EmptyComponent from './EmptyComponent';
 import{ BsFillBagFill} from "react-icons/bs"
 

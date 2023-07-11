@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from "recoil";
 import { authStatus, postsState } from "../../recoilAtoms/Auth";
-import Post from "../../components/Post"
-import AddPostModal from "../../components/AddPostModal"
-import SideBar from "../../components/SideBar"
+import Post from "../../components/IndividualComponents/Post"
+import AddPostModal from "../../components/ModalComponents/AddPostModal"
+import SideBar from "../../components/SidebarComponents/SideBar"
 import { Center, Flex, Box, VStack, Button ,Spacer} from '@chakra-ui/react';
 import BackgroundImage from "../../images/bg.png"
 import { toast } from 'react-toastify';
 import axios from "axios";
 import { colors, baseUrl } from "../../constants/contants";
-import PetDetailsModal from '../../components/PetDetailsModal';
+// import PetDetailsModal from '../../components/PetDetailsModal';
 
 
 function HomePage() {

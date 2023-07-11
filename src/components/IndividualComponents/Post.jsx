@@ -3,17 +3,17 @@ import { Box, Flex, Avatar, IconButton, Icon, Text, Center, Image, Menu, MenuBut
 import { FaHeart, FaHeartOutline, FaComment, FaShare, FaSave, FaEllipsisV, FaTrash } from 'react-icons/fa';
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs"
-import { staticFilesUrl } from "../constants/contants"
-import { deletePost } from '../api/posts';
-import { authStatus, postsState,refreshComments } from "../recoilAtoms/Auth";
+import { staticFilesUrl } from "../../constants/contants"
+import { deletePost } from '../../api/posts';
+import { authStatus, postsState,refreshComments } from "../../recoilAtoms/Auth";
 import { useRecoilState } from "recoil";
-import PetDetailsModal from './PetDetailsModal';
-import VpdDetailsModal from './VpdDetailsModal';
-import ProductDetailsModal from "./ProductDetailsModal";
-import { addLike, fetchLikes, deleteLike } from '../api/likes';
-import { addSavedPost, fetchSavedPosts, deleteSavedPost } from '../api/savedpost';
-import CommentDrawer from './CommentDrawer';
-import { fetchComments } from '../api/comments';
+import PetDetailsModal from '../ModalComponents/PetDetailsModal';
+import VpdDetailsModal from '../ModalComponents/VpdDetailsModal';
+import ProductDetailsModal from "../ModalComponents/ProductDetailsModal";
+import { addLike, fetchLikes, deleteLike } from '../../api/likes';
+import { addSavedPost, fetchSavedPosts, deleteSavedPost } from '../../api/savedpost';
+import CommentDrawer from '../DrawerComponents/CommentDrawer';
+import { fetchComments } from '../../api/comments';
 
 function Post(props) {
   const {

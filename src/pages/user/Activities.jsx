@@ -2,12 +2,12 @@ import { Tabs, TabList, Tab, Box, Flex } from "@chakra-ui/react";
 import React, { useEffect, useState } from 'react';
 import { useColorMode } from "@chakra-ui/react";
 import {colors} from "../../constants/contants"
-import EnquiriesReceived from "../../components/Activities/EnquiriesReceived"
-import EnquiriesSent from "../../components/Activities/EnquiriesSent"
-import OrdersReceived from "../../components/Activities/OrdersRecieved"
-import OrdersPlaced from "../../components/Activities/OrdersSent"
-import VirtualPlayDates from "../../components/Activities/VpdRequests"
-import Sidebar from "../../components/SideBar";
+import EnquiriesReceived from "../../components/ActivityComponents/EnquiriesReceived"
+import EnquiriesSent from "../../components/ActivityComponents/EnquiriesSent"
+import OrdersReceived from "../../components/ActivityComponents/OrdersRecieved"
+import OrdersPlaced from "../../components/ActivityComponents/OrdersSent"
+import VirtualPlayDates from "../../components/ActivityComponents/VpdRequests"
+import Sidebar from "../../components/SidebarComponents/SideBar";
 import { toast } from 'react-toastify';
 import axios from "axios";
 import { baseUrl } from "../../constants/contants";

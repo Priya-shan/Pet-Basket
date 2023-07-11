@@ -9,6 +9,7 @@ const CustomInput = ({
   value,
   onChange,
   type,
+  isDisabled,
 }) => {
   return (
     <Input
@@ -30,6 +31,7 @@ const CustomInput = ({
       value={value}
       onChange={onChange}
       type={type}
+      isDisabled={isDisabled}
     />
   );
 };

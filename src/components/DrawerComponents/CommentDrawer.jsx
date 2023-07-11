@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Drawer, Text, Flex, Spacer, Input, DrawerBody, IconButton, Box, Icon, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, Button, List, ListItem, DrawerFooter } from '@chakra-ui/react';
-import { authStatus,refreshComments } from '../recoilAtoms/Auth';
-import { addComment, deleteComment, fetchComments } from '../api/comments';
-import { addReply, deleteReply } from '../api/replies';
+import { authStatus,refreshComments } from '../../recoilAtoms/Auth';
+import { addComment, deleteComment, fetchComments } from '../../api/comments';
+import { addReply, deleteReply } from '../../api/replies';
 import { useRecoilState } from "recoil";
 import { MdDeleteOutline } from "react-icons/md"
 import { useEffect } from 'react';
@@ -80,7 +80,7 @@ function CommentDrawer({ isOpen, onClose, postId }) {
         getComments();
     }, [])
     return (
-        <Drawer isOpen={isOpen} placement="left" onClose={onClose} size={'sm'}>
+        <Drawer isOpen={isOpen} placement="left" onClose={onClose} size={'sm'} zIndex={1000}>
             <DrawerOverlay>
                 <DrawerContent>
                     <DrawerCloseButton />
@@ -88,7 +88,7 @@ function CommentDrawer({ isOpen, onClose, postId }) {
                     <DrawerBody>
                         <List spacing={2}>
                             {comments.map((comment) => (
-                                <Box backgroundColor={'brand.200'} padding={2} borderRadius={10}>
+                                <Box key={comment.commentId} backgroundColor={'brand.200'} padding={2} borderRadius={10}>
                                 <ListItem key={comment.commentId}>
                                     <strong>{comment.userName}</strong> {comment.commentText}
                                     {comment.userName === authStatuss.userName && (
