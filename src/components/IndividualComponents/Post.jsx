@@ -186,7 +186,7 @@ function Post(props) {
             </Box>
 
             <Spacer />
-            {post.label === "pet" && post.status && post.pet?.virtualPlayDateStatus && (
+            {post.label === "pet"  && post.pet?.virtualPlayDateStatus && (
               <Box><Text _hover={{ cursor: "pointer" }} onClick={openVpdModal}>⚡</Text></Box>
             )}
             <Spacer />

@@ -7,6 +7,7 @@ import HomePage from './pages/user/HomePage';
 import LandingPage from './pages/auth/LandingPage'
 import Activities from './pages/user/Activities';
 import Profile from "./pages/user/Profile";
+import SavedItems from './pages/user/SavedItems';
 
 export const routes = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ export const routes = createBrowserRouter([
   {
     path: "/profile",
     element: <Profile/>
+  },
+  {
+    path: "/savedItems",
+    element: <SavedItems/>
   },
   
 ]);

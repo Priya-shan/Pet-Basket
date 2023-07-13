@@ -4,12 +4,20 @@ import {
     FormControl, FormLabel, Input, Textarea, Image, Text, Heading, HStack, Flex, Spacer
 } from '@chakra-ui/react';
 import { staticFilesUrl } from '../../constants/contants';
+import { authStatus } from "../../recoilAtoms/Auth"
+import { Toast } from '@chakra-ui/react';
+import { useRecoilState } from 'recoil';
+import { addVpdRequest } from '../../api/vpdRequest';
 function VpdDetailsModal({ closeModal, post }) {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedButton, setSelectedButton] = useState('');
+    const [selectedButton, setSelectedButton] = useState(0);
+    const [selectedSlot, setSelectedSlot] = useState('');
+    const [authStatuss, setAuthStatus] = useRecoilState(authStatus);
 
-    const handleClick = (buttonId) => {
+    const handleClick = (selectedSlot, buttonId) => {
+        console.log(buttonId);
         setSelectedButton(buttonId);
+        setSelectedSlot(selectedSlot);
     };
 
     const handleOpen = () => {
@@ -20,6 +28,19 @@ function VpdDetailsModal({ closeModal, post }) {
         setIsOpen(false);
         closeModal();
     };
+    async function submitVpdRequest() {
+        const vpdRequestModel = {
+            vpdId: post.pet.virtualPlayDate[0].vpdId,
+            postId:post.postId,
+            requesterUserName: authStatuss.userName,
+            approverUserName: post.user.userName,
+            slot: selectedSlot,
+            vpdDate: new Date()
+        }
+        console.log(vpdRequestModel);
+        const response = await addVpdRequest(vpdRequestModel);
+        console.log(response);
+    }
     useEffect(() => {
         handleOpen();
         console.log(post);
@@ -48,9 +69,9 @@ function VpdDetailsModal({ closeModal, post }) {
                                         {post.pet.virtualPlayDate[0].vpdTimeSlot.map((element) => (
                                             <Button
                                                 key={element.slotId}
-                                                backgroundColor={selectedButton === element.slotId ? 'brand.500' : 'brand.100'}
+                                                backgroundColor={selectedButton == element.slotId ? 'brand.500' : 'brand.100'}
                                                 size="sm"
-                                                onClick={() => handleClick(`${element.slotId}`)}
+                                                onClick={() => handleClick(element.slotTime, element.slotId)}
                                             >
                                                 {element.slotTime}
                                             </Button>
@@ -60,7 +81,12 @@ function VpdDetailsModal({ closeModal, post }) {
                                     <Text my={1} >Amount : ₹{post.pet.virtualPlayDate[0].price}</Text>
                                     <Text my={1} >Duration : {post.pet.virtualPlayDate[0].duration}</Text>
                                     <Flex alignItems={"center"}>
-                                        <Button type="submit" fontSize="12px" mt="2" width={200}>Pay & Book a Virtual Play Date</Button>
+                                    {selectedButton > 0 && authStatuss.userName != post.user.userName ? (
+                                                <Button fontSize="12px" mt="2" width={200} onClick={submitVpdRequest}>Pay & Book a Virtual Play Date</Button>
+                                            ) : (
+                                                <Button colorScheme='grey' disabled _hover={{ cursor: "none" }} bg={"grey"} fontSize="12px" mt="2" width={200}>Pay & Book a Virtual Play Date</Button>
+                                            )}
+                                        
                                     </Flex>
                                 </Stack>
                             </form>

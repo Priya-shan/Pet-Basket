@@ -7,13 +7,14 @@ import EnquiriesSent from "../../components/ActivityComponents/EnquiriesSent"
 import OrdersReceived from "../../components/ActivityComponents/OrdersRecieved"
 import OrdersPlaced from "../../components/ActivityComponents/OrdersSent"
 import VirtualPlayDates from "../../components/ActivityComponents/VpdRequests"
-import Sidebar from "../../components/SidebarComponents/SideBar";
+import SideBar from "../../components/SidebarComponents/SideBar";
 import { toast } from 'react-toastify';
 import axios from "axios";
 import { baseUrl } from "../../constants/contants";
 import { authStatus } from "../../recoilAtoms/Auth";
 import { useRecoilState } from "recoil";
 import {fetchUserById} from "../../api/users";
+import BackgroundImage from "../../images/bg.png";
 
 function Activities() {
   const tabs = [
@@ -46,8 +47,14 @@ function Activities() {
     fetchData();
   },[]);
   return (
-    <Flex>
-      <Sidebar></Sidebar>
+    <>
+    <Box position="sticky" left={0} bottom={0} width="100%" display={{ base: "block", md: "none" }} zIndex={2}>
+    <SideBar />
+</Box>
+<Flex backgroundImage={BackgroundImage} style={{ backgroundAttachment: 'fixed' }} height={"100vh"} overflowY={'hidden'}>
+<Box position="sticky" left={0} top={0} height="100vh" width="300px" display={{ base: "none", md: "block" }}>
+                    <SideBar />
+                </Box>
       <Box width={"100%"} >
         <Tabs mt={5}
           variant="enclosed"
@@ -72,7 +79,7 @@ function Activities() {
         </Box>
       </Box>
     </Flex>
-    
+    </>
   );
 }
 export default Activities;

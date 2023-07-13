@@ -78,10 +78,6 @@ function Profile() {
         console.log("inga paaruu");
         console.log(response.data.posts);
         setData(response.data);
-        // formData.name = response.data.name;
-        // formData.email = response.data.email;
-        // formData.mobile = response.data.mobile;
-        // formData.address = response.data.address;
         const postData = response.data.posts;
         setPosts(await getPost(postData));
         console.log("response set post done");
@@ -138,8 +134,6 @@ function Profile() {
     }, [state])
     return (
         < >
-
-            {/* <Skeleton isLoaded={!loading}>  */}
             <Box position="sticky" left={0} bottom={0} width="100%" display={{ base: "block", md: "none" }} zIndex={2}>
                 <SideBar />
             </Box>
@@ -200,6 +194,7 @@ function Profile() {
                                     key={index}
                                     bg="gray.200"
                                     flex={`0 0 calc((100% - (3 - 1) * 10px) /3)`} // calculate the width dynamically
+                                    height={{base:"100px",md:"230px"}}
                                     boxShadow="2px 2px 4px rgba(0, 0, 0, 0.5)"
                                     my={"5px"}
                                     onClick={() => handleViewDetails(post.postId)}

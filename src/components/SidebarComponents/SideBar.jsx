@@ -42,11 +42,17 @@ const Sidebar = () => {
           <SideBarElement name="Home" iconName={FaHome} onClick={()=> navigate("/")}></SideBarElement>
           <SideBarElement name="Search" iconName={FaSearch} onClick={openSearchDrawer}></SideBarElement>
           <SideBarElement name="New Post" iconName={FaPlus} onClick={openModal}></SideBarElement>
-          <SideBarElement name="My Activities" iconName={FiActivity} 
+          <SideBarElement name="Activities" iconName={FiActivity} 
             onClick={() => navigate("/activities")}>
             </SideBarElement>
           {/* <SideBarElement name="Notifications" iconName={FaBell}></SideBarElement> */}
-          <SideBarElement name="Saved Item" iconName={FaBookmark}></SideBarElement>
+          <SideBarElement 
+          name="Saved Item" 
+          iconName={FaBookmark} 
+          onClick={()=>navigate("/SavedItems")}
+          >
+            
+          </SideBarElement>
           
           <SideBarElement name="Profile" iconName={FaUser} onClick={() => navigate("/profile", { state: { value: authStatuss.userName } })}></SideBarElement>
         </VStack>

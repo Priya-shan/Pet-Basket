@@ -86,7 +86,7 @@ function AddPostModal({ closeModal }) {
       console.log(postResponse.data);
       const response=postResponse.data
       setPostsState(!postsStatee);
-      if(isAvailable){
+      if(isAvailable || isVpdAvailable){
         if(selectedRadio==="pet"){
           //puts an entry in pet table
           const petModal = {
