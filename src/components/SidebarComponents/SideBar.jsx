@@ -76,6 +76,13 @@ const Sidebar = () => {
           onClick={()=> navigate("/")}
         />
        
+       <IconButton
+          aria-label="Search"
+          icon={<FaSearch />}
+          colorScheme="white"
+          width={1}
+          onClick={openSearchDrawer}
+        />
         <IconButton
           aria-label="I-Request"
           icon={<FaQuestion />}
@@ -103,13 +110,9 @@ const Sidebar = () => {
           icon={<FaBookmark />}
           colorScheme="white"
           width={1}
+          onClick={()=>navigate("/SavedItems")}
         />
-        <IconButton
-          aria-label="AMA-Pets"
-          icon={<MdMessage />}
-          colorScheme="white"
-          width={1}
-        />
+        
         <IconButton
           aria-label="Profile"
           icon={<FaUser />}

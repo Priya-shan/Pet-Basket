@@ -1,7 +1,7 @@
 import { Tabs, TabList, Tab, Box, Flex } from "@chakra-ui/react";
 import React, { useEffect, useState } from 'react';
 import { useColorMode } from "@chakra-ui/react";
-import {colors} from "../../constants/contants"
+import { colors } from "../../constants/contants"
 import EnquiriesReceived from "../../components/ActivityComponents/EnquiriesReceived"
 import EnquiriesSent from "../../components/ActivityComponents/EnquiriesSent"
 import OrdersReceived from "../../components/ActivityComponents/OrdersRecieved"
@@ -13,7 +13,7 @@ import axios from "axios";
 import { baseUrl } from "../../constants/contants";
 import { authStatus } from "../../recoilAtoms/Auth";
 import { useRecoilState } from "recoil";
-import {fetchUserById} from "../../api/users";
+import { fetchUserById } from "../../api/users";
 import BackgroundImage from "../../images/bg.png";
 
 function Activities() {
@@ -33,9 +33,8 @@ function Activities() {
 
   async function fetchData() {
     try {
-    
-      console.log("hello"+authStatuss.userName);
-      const res= await fetchUserById(authStatuss.userName);
+      console.log("hello" + authStatuss.userName);
+      const res = await fetchUserById(authStatuss.userName);
       console.log(res.data);
       setData(res.data);
     } catch (error) {
@@ -43,42 +42,42 @@ function Activities() {
       console.log("An error occurred while making the request:", error);
     }
   }
-  useEffect(()=>{
+  useEffect(() => {
     fetchData();
-  },[]);
+  }, []);
   return (
     <>
-    <Box position="sticky" left={0} bottom={0} width="100%" display={{ base: "block", md: "none" }} zIndex={2}>
-    <SideBar />
-</Box>
-<Flex backgroundImage={BackgroundImage} style={{ backgroundAttachment: 'fixed' }} height={"100vh"} overflowY={'hidden'}>
-<Box position="sticky" left={0} top={0} height="100vh" width="300px" display={{ base: "none", md: "block" }}>
-                    <SideBar />
-                </Box>
-      <Box width={"100%"} >
-        <Tabs mt={5}
-          variant="enclosed"
-          colorScheme="brand"
-          size="md"
-          onChange={(index) => setSelectedTab(index)}
-        >
-          <TabList display="flex" justifyContent="space-around" textAlign={'center'}>
-            {tabs.map((tab, index) => (
-              <Tab
-                key={index}
-                _selected={{ color: "black", bg: "brand.500" }}
-                _hover={{ bg: "brand.200" }}
-              >
-                {tab.label}
-              </Tab>
-            ))}
-          </TabList>
-        </Tabs>
-        <Box mt={4}>
-          <SelectedComponent data={data} />
-        </Box>
+      <Box position="sticky" left={0} bottom={0} width="100%" display={{ base: "block", md: "none" }} zIndex={2}>
+        <SideBar />
       </Box>
-    </Flex>
+      <Flex backgroundImage={BackgroundImage} style={{ backgroundAttachment: 'fixed' }} height={"100vh"} overflowY={'hidden'}>
+        <Box position="sticky" left={0} top={0} height="100vh" width="300px" display={{ base: "none", md: "block" }}>
+          <SideBar />
+        </Box>
+        <Box width={"100%"} >
+          <Tabs mt={5}
+            variant="enclosed"
+            colorScheme="brand"
+            size="md"
+            onChange={(index) => setSelectedTab(index)}
+          >
+            <TabList display="flex" justifyContent="space-around" textAlign={'center'}>
+              {tabs.map((tab, index) => (
+                <Tab fontSize={{base:"10px",sm:"12px", md:"15px"}}
+                  key={index}
+                  _selected={{ color: "black", bg: "brand.500" }}
+                  _hover={{ bg: "brand.200" }}
+                >
+                  {tab.label}
+                </Tab>
+              ))}
+            </TabList>
+          </Tabs>
+          <Box mt={4}>
+            <SelectedComponent data={data} />
+          </Box>
+        </Box>
+      </Flex>
     </>
   );
 }

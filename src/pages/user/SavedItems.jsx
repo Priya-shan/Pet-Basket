@@ -60,6 +60,7 @@ function SavedItems() {
                                     key={index}
                                     bg="gray.200"
                                     flex={`0 0 calc((100% - (3 - 1) * 10px) /3)`} // calculate the width dynamically
+                                    
                                     boxShadow="2px 2px 4px rgba(0, 0, 0, 0.5)"
                                     my={"5px"}
                                     onClick={() => handleViewDetails(item.post.postId)}
@@ -68,7 +69,7 @@ function SavedItems() {
                                         src={`${staticFilesUrl}/posts/${item.post.postId}${item.post.imageUri}`}
                                         alt={item.post.caption}
                                         w="100%"
-                                        h="200px"
+                                        height={{base:"100px",md:"230px"}}
                                         objectFit="cover"
                                     />
                                 </Box>

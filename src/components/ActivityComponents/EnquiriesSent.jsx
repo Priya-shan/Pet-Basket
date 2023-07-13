@@ -33,9 +33,8 @@ function EnquiriesSent({data}) {
       key={item.enquiryId}
       alignItems="center"
       borderBottom="1px solid"
-      pb={5}
       borderColor="gray.200"
-      px={20}
+      p={5}
       justifyContent="space-around"
       width="100%"
     >
@@ -43,7 +42,7 @@ function EnquiriesSent({data}) {
         <AiOutlineUser size={24} />
       </Box>
       <Box>
-        <Text>
+        <Text fontSize={{base:"12px",md:"15px"}}>
           You sent a request to enquire about{" "}
           <chakra.strong
             cursor="pointer"

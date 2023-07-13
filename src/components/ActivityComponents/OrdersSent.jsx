@@ -36,9 +36,8 @@ function OrdersSent({data}) {
       key={item.orderId}
       alignItems="center"
       borderBottom="1px solid"
-      pb={5}
+      p={5}
       borderColor="gray.200"
-      px={20}
       justifyContent="space-around"
       width="100%"
     >
@@ -46,7 +45,7 @@ function OrdersSent({data}) {
         <BsFillBagFill size={24} />
       </Box>
       <Box>
-        <Text>
+        <Text fontSize={{base:"12px",md:"15px"}}>
           Order Placed Successfully - 
           <chakra.strong
             cursor="pointer"
@@ -64,15 +63,26 @@ function OrdersSent({data}) {
         objectFit="cover"
         mr={4}
       />
+       <Box >
+                <Flex 
+                  key={item.vpdRequestId}
+                  flexDirection={{ base: 'column', lg: 'row' }}
+                  alignItems={{ base: 'center', lg: 'flex-start' }}
+                  justifyContent={{ base: 'center', lg: 'space-around' }}
+                  
+                >
       <IconButton
         aria-label="View Details"
         icon={<FaRegEye />}
         colorScheme="brand"
         w={2}
+        mx={4}
         onClick={() => handleViewDetails(item.postId)}
       />
-      <Button size={"sm"}>Cancel</Button>
-      <Badge colorScheme='purple'>In Progress</Badge>
+      <Button size={"sm"} mx={4}>Cancel</Button>
+      <Badge colorScheme='purple' mx={4} display={'flex'} alignItems={'center'} mt={2}>In Progress</Badge>
+      </Flex>
+      </Box>
       {/* <Badge colorScheme='green'>Completed</Badge>
       <Badge colorScheme='red'>Cancelled</Badge> */}
 

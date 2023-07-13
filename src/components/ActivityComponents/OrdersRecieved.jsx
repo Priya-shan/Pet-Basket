@@ -29,9 +29,8 @@ function OrdersReceived({data}) {
       key={item.enquiryId}
       alignItems="center"
       borderBottom="1px solid"
-      pb={5}
+      p={5}
       borderColor="gray.200"
-      px={20}
       justifyContent="space-around"
       width="100%"
     >

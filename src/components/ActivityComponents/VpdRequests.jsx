@@ -13,12 +13,12 @@ function VpdRequests() {
   const [data, setData] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [postData, setPostData] = useState([]);
-  const  handleViewDetails =async (postId) =>  {
+  const handleViewDetails = async (postId) => {
     await fetchPostData(postId);
     onOpen();
   };
-  async function fetchPostData(postId){
-    const response=await fetchPostById(postId);
+  async function fetchPostData(postId) {
+    const response = await fetchPostById(postId);
     setPostData(response.data);
   }
   async function fetchData() {
@@ -39,88 +39,105 @@ function VpdRequests() {
 
   return (
     <>
-    <Box mt={10} px={"20px"} py={"5px"}
-    >
-      {data && data.length > 0 ? (
-        data.map((item, index) => (
-          <Flex
-            key={item.vpdRequestId}
-            borderRadius={10}
-            // bgColor={'brand.100'}
-            bgColor="rgb(248, 237, 254, 0.8)"
-            mx={0}
-            alignItems="center"
-            borderBottom="1px solid"
-            py={3}
-            borderColor="gray.200"
-            px={5}
-            justifyContent="start"
-            width="100%"
-            onClick={showPetDetail}
-          >
-            
-            <Box flex="4" pt={2}>
-              <Text>
-                A Virtual Play Date has been scheduled with{' '}
-                <Text as="span" fontWeight="bold" _hover={{cursor:"pointer"}}>
-                  {item.requesterUserName === authStatuss.userName
-                    ? item.approverUserName
-                    : item.requesterUserName}
+      <Box mt={10} px={"20px"} py={"5px"}
+      >
+        {data && data.length > 0 ? (
+          data.map((item, index) => (
+            <Flex
+              key={item.vpdRequestId}
+              borderRadius={10}
+              // bgColor={'brand.100'}
+              bgColor="rgb(248, 237, 254, 0.8)"
+              mx={0}
+              alignItems="center"
+              borderBottom="1px solid"
+              py={3}
+              borderColor="gray.200"
+              px={5}
+              justifyContent="start"
+              width="100%"
+              onClick={showPetDetail}
+            >
+
+              <Box flex="4" pt={2} >
+                <Text fontSize={{base:"12px",md:"15px"}}>
+                  A Virtual Play Date has been scheduled with{' '}
+                  <Text as="span" fontWeight="bold" _hover={{ cursor: "pointer" }}>
+                    {item.requesterUserName === authStatuss.userName
+                      ? item.approverUserName
+                      : item.requesterUserName}
+                  </Text>
                 </Text>
-              </Text>
-            </Box>
-            <Box flex="1" pt={2} display={'flex'} justifyContent={'center'}>
-              <Badge colorScheme="purple">
-                12-03-2023
-              </Badge>
-            </Box>
-            <Box flex="1" pt={2} display={'flex'} justifyContent={'center'}>
-              <Badge colorScheme="purple">
-                {item.requesterUserName === authStatuss.userName ? 'Viewing' : 'Showcasing'}
-              </Badge>
-            </Box>
-            <Box flex="1" pt={2} display={'flex'} justifyContent={'center'}>
-              <Badge colorScheme="purple">
-                {item.requesterUserName === authStatuss.userName ? 'Upcoming' : 'Completed'}
-              </Badge>
-            </Box>
-            <Box flex="1" display={'flex'} justifyContent={'center'} pt={2}>
-              <IconButton
-                aria-label="View Details"
-                icon={<FaPaw />}
-                colorScheme="brand"
-                w={2}
-                onClick={()=>{handleViewDetails(item.postId)}}
-              />
-            </Box>
-            <Box flex="1" display={'flex'} justifyContent={'center'} pt={2}>
-              <IconButton
-                aria-label="View Details"
-                icon={<BsFillCameraVideoFill />}
-                colorScheme="brand"
-                w={2}
-              />
-            </Box>
-          </Flex>
+              </Box>
+              <Box flex="4">
+                <Flex 
+                  key={item.vpdRequestId}
+                  flexDirection={{ base: 'column', lg: 'row' }}
+                  alignItems={{ base: 'center', lg: 'flex-start' }}
+                  justifyContent={{ base: 'center', lg: 'space-around' }}
+                  
+                >
+                  <Box flex="1" pt={2} display="flex" justifyContent="center" mx={3}>
+                    <Badge colorScheme="purple" >12-03-2023</Badge>
+                  </Box>
+                  <Box flex="1" pt={2}  mx={3}display="flex" justifyContent="center">
+                    <Badge colorScheme="purple">
+                      {item.requesterUserName === authStatuss.userName ? 'Viewing' : 'Showcasing'}
+                    </Badge>
+                  </Box>
+                  <Box flex="1" pt={2} mx={3} display="flex" justifyContent="center">
+                    <Badge colorScheme="purple">
+                      {item.requesterUserName === authStatuss.userName ? 'Upcoming' : 'Completed'}
+                    </Badge>
+                  </Box>
+                </Flex>
 
-        ))
-      ) : (
-        <EmptyComponent message="No Virtual Play Dates History! 👀" />
-      )}
+              </Box>
+              <Box flex="1" >
+                <Flex key={item.vpdRequestId}
+                  flexDirection={{ base: 'column', lg: 'row' }}
+                  alignItems={{ base: 'center', lg: 'flex-start' }}
+                  justifyContent={{ base: 'center', lg: 'flex-start' }}>
+                  <Box flex="1" display={'flex'} justifyContent={'center'} pt={2}>
+                    <IconButton
+                      aria-label="View Details"
+                      icon={<FaPaw />}
+                      colorScheme="brand"
+                      w={2}
+                      onClick={() => { handleViewDetails(item.postId) }}
+                    />
+                  </Box>
+                  <Box flex="1" display={'flex'} justifyContent={'center'} pt={2}>
+                    <IconButton
+                      aria-label="View Details"
+                      icon={<BsFillCameraVideoFill />}
+                      colorScheme="brand"
+                      w={2}
+                    />
+                  </Box>
+                </Flex>
+              </Box>
 
-    </Box>
-     <Modal isOpen={isOpen} onClose={onClose}>
-     <ModalOverlay />
-     <ModalContent>
-       <ModalCloseButton />
-       <ModalBody mt={5}>
-         <Post key={postData.postId}
-               post={postData}>
-               </Post>
-       </ModalBody>
-     </ModalContent>
-   </Modal>
-   </>
+            </Flex>
+
+          ))
+        ) : (
+          <EmptyComponent message="No Virtual Play Dates History! 👀" />
+        )}
+
+      </Box>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalBody mt={5}>
+            <Post key={postData.postId}
+              post={postData}>
+            </Post>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
   )
 }
 export default VpdRequests
