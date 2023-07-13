@@ -27,7 +27,8 @@ function CommentDrawer({ isOpen, onClose, postId }) {
         const commentResponse = await fetchComments();
         const commentsArray = Object.values(commentResponse.data);
         const commentsByPost = await commentsArray.filter((entry) => entry.postId === postId);
-        setComments(commentsByPost);
+        const commentsInDescendingOrder = commentsByPost.slice().reverse();
+        setComments(commentsInDescendingOrder);
         setRefreshComment(!refreshComment);
     }
 

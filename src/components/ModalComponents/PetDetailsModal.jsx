@@ -11,6 +11,7 @@ import { useRecoilState } from "recoil";
 import { updateUser, fetchUserById } from '../../api/users';
 import { addEnquiry } from '../../api/adoptionEnquiries';
 import { toast } from 'react-toastify';
+import {Toast} from "@chakra-ui/react"
 function PetDetailsModal({ closeModal, post }) {
   const [isOpen, setIsOpen] = useState(false);
   const [authStatuss, setAuthStatus] = useRecoilState(authStatus);
@@ -55,7 +56,7 @@ function PetDetailsModal({ closeModal, post }) {
     console.log(EnquiryModel);
     const enquiryResponse = await addEnquiry(EnquiryModel);
     console.log(enquiryResponse);
-
+    Toast("Adoption enquiry sent successfully !")
     handleClose();
   };
 

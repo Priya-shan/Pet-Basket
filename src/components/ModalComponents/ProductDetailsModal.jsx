@@ -4,11 +4,12 @@ import {
     FormControl, FormLabel, Input, Textarea, Image, Text, Heading, HStack, Spacer, Flex, Center
 } from '@chakra-ui/react';
 import CustomInput from '../ChakraComponents/CustomInput';
-import { staticFilesUrl } from '../../constants/contants';
+import { staticFilesUrl,RAZOR_KEY } from '../../constants/contants';
 import { authStatus } from "../../recoilAtoms/Auth";
 import { useRecoilState } from "recoil";
 import { updateUser, fetchUserById } from '../../api/users';
 import { addOrder } from '../../api/orders';
+import {Toast} from "@chakra-ui/react";
 function VpdDetailsModal({ closeModal, post }) {
     const [isOpen, setIsOpen] = useState(false);
     const [quantity, setquantity] = useState(1);
@@ -22,8 +23,55 @@ function VpdDetailsModal({ closeModal, post }) {
         amount: '',
     });
     const [authStatuss, setAuthStatus] = useRecoilState(authStatus);
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+
+    function loadScript(src) {
+        console.log("on load script");
+        return new Promise((resolve) => {
+            const script = document.createElement("script");
+            script.src = src;
+            script.onload = () => {
+                resolve(true);
+            };
+            script.onerror = () => {
+                resolve(false);
+            };
+            document.body.appendChild(script);
+        });
+    }
+
+    async function onPaymentRequest() {
+        console.log("on payment request");
+        const res = await loadScript(
+            "https://checkout.razorpay.com/v1/checkout.js"
+        );
+        if (!res) {
+            alert("Razorpay SDK failed to load. Are you online?");
+            return;
+        }
+
+        try {
+            console.log("entered try");
+            const options = {
+                key: RAZOR_KEY,
+                amount: amount * 100,
+                currency: "INR",
+                name: "Pet Basket",
+                description: "Transaction",
+                handler: async function (res) {
+                    await placeOrder();
+                },
+            };
+            const paymentObject = new window.Razorpay(options);
+            paymentObject.open();
+        } catch (error) {
+            if (error.response) {
+                alert(error.response.data);
+            } else {
+                console.log("Non-Axios Error:", error);
+            }
+        }
+    }
+    async function placeOrder(){
         console.log(authStatus);
         // Process the form submission here
         const response = await fetchData();
@@ -57,7 +105,7 @@ function VpdDetailsModal({ closeModal, post }) {
         console.log(orderModel);
         const orderResponse = await addOrder(orderModel);
         console.log(orderResponse);
-    
+        Toast("Order placed Successfully !");
         handleClose();
     };
 
@@ -119,7 +167,7 @@ function VpdDetailsModal({ closeModal, post }) {
 
                             <Stack flex="1" p="4">
 
-                                <form fontSize="13px" onSubmit={handleSubmit} >
+                                <form fontSize="13px" >
                                     <Stack spacing="1">
                                         <FormControl id="name" isRequired>
                                             <FormLabel fontSize="12px">Name:</FormLabel>
@@ -149,7 +197,7 @@ function VpdDetailsModal({ closeModal, post }) {
                                             <Text>Total Amount : ₹{amount}</Text>
                                             <Spacer></Spacer>
                                             {formData.quantity > 0 && authStatuss.userName != post.user.userName ? (
-                                                <Button type="submit" fontSize="12px" mt="2">Pay & Place Order</Button>
+                                                <Button onClick={onPaymentRequest} fontSize="12px" mt="2">Pay & Place Order</Button>
                                             ) : (
                                                 <Button colorScheme='grey' disabled _hover={{ cursor: "none" }} bg={"grey"} fontSize="12px" mt="2">Pay & Place Order</Button>
                                             )}
