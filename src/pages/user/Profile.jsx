@@ -173,7 +173,7 @@ function Profile() {
 
                     <Flex justifyContent="space-around" mb={8}>
                         <Box textAlign="center">
-                            <Text fontSize="xl" fontWeight="bold">10</Text>
+                            <Text fontSize="xl" fontWeight="bold">0{posts.length}</Text>
                             <Text>Posts</Text>
                         </Box>
                         <Box textAlign="center">

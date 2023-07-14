@@ -3,11 +3,13 @@ import {
     Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Stack,
     FormControl, FormLabel, Input, Textarea, Image, Text, Heading, HStack, Flex, Spacer
 } from '@chakra-ui/react';
-import { staticFilesUrl,RAZOR_KEY } from '../../constants/contants';
+import { staticFilesUrl, RAZOR_KEY } from '../../constants/contants';
 import { authStatus } from "../../recoilAtoms/Auth"
-import { Toast } from '@chakra-ui/react';
+import { toast } from 'react-toastify';
 import { useRecoilState } from 'recoil';
 import { addVpdRequest } from '../../api/vpdRequest';
+import { addMeeting } from '../../api/webexApi';
+import axios from 'axios'
 function VpdDetailsModal({ closeModal, post }) {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedButton, setSelectedButton] = useState(0);
@@ -28,19 +30,75 @@ function VpdDetailsModal({ closeModal, post }) {
         setIsOpen(false);
         closeModal();
     };
+    async function createMeeting(startTime, endTime) {
+        try {
+            const accessToken = 'OTdhNDU0ZDAtY2ZiNS00MzhiLWExZjktYjYxZjJmZWZjMGFlYjk2MzQwZTgtMGRj_P0A1_f0bfbd13-cb41-469d-a2f8-31cc90ec7f7d'; // Replace with your access token
+            const meetingData = {
+                title: 'My Meeting',
+                start: startTime,
+                end: endTime,
+            };
+
+            const response = await axios.post(
+                'https://webexapis.com/v1/meetings',
+                meetingData,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+
+            return response.data; 
+        } catch (error) {
+            return error;
+        }
+    }
+    function convert12HourTo24Hour(time12hr) {
+        const [time, modifier] = time12hr.split(' ');
+      
+        let [hours, minutes] = time.split(':');
+        console.log("min ",minutes);
+        if (hours === '12') {
+          hours = '00';
+        }
+      
+        if (modifier === 'PM') {
+          hours = parseInt(hours, 10) + 12;
+        }
+        minutes = minutes || '00';
+        return {start: `${hours}:${minutes}`, end:  `${hours}:30`}
+      }
     async function submitVpdRequest() {
+
+        console.log(selectedSlot);
+        const time24hr = convert12HourTo24Hour(selectedSlot);
+        console.log(time24hr.start);
+        console.log(time24hr.end);
+        const vpdDate= new Date().toISOString();
+        console.log(vpdDate);
+        const startTime = `${vpdDate.slice(0, 10)}T${time24hr.start}`;
+        const endTime = `${vpdDate.slice(0, 10)}T${time24hr.end}`;
+        console.log(startTime," ",endTime);
+
+        const meetingResponse =await createMeeting(startTime,endTime);
+        console.log("meet res");
+        console.log(meetingResponse);
         const vpdRequestModel = {
             vpdId: post.pet.virtualPlayDate[0].vpdId,
             postId:post.postId,
             requesterUserName: authStatuss.userName,
             approverUserName: post.user.userName,
             slot: selectedSlot,
-            vpdDate: new Date()
+            vpdDate: new Date(),
+            meetingLink : meetingResponse.webLink,
         }
+        console.log("vpd req model");
         console.log(vpdRequestModel);
         const response = await addVpdRequest(vpdRequestModel);
-        Toast("Virtual Play Date has been scheduled successfully !");
         console.log(response);
+        toast("Virtual Play Date has been scheduled successfully !");
         handleClose();
     }
     function loadScript(src) {
@@ -78,6 +136,9 @@ function VpdDetailsModal({ closeModal, post }) {
                 prefill: {
                     contact: "+919900000000",
                 },
+                theme: {
+                    color: "#ebc8fd", // Set the desired color here
+                  },
                 handler: async function (res) {
                     await submitVpdRequest();
                 },
@@ -92,7 +153,7 @@ function VpdDetailsModal({ closeModal, post }) {
             }
         }
     }
-   
+
     useEffect(() => {
         handleOpen();
         console.log(post);
@@ -133,12 +194,12 @@ function VpdDetailsModal({ closeModal, post }) {
                                     <Text my={1} >Amount : ₹{post.pet.virtualPlayDate[0].price}</Text>
                                     <Text my={1} >Duration : {post.pet.virtualPlayDate[0].duration}</Text>
                                     <Flex alignItems={"center"}>
-                                    {selectedButton > 0 && authStatuss.userName != post.user.userName ? (
-                                                <Button fontSize="12px" mt="2" width={200} onClick={onPaymentRequest}>Pay & Book a Virtual Play Date</Button>
-                                            ) : (
-                                                <Button colorScheme='grey' disabled _hover={{ cursor: "none" }} bg={"grey"} fontSize="12px" mt="2" width={200}>Pay & Book a Virtual Play Date</Button>
-                                            )}
-                                        
+                                        {selectedButton > 0 && authStatuss.userName != post.user.userName ? (
+                                            <Button fontSize="12px" mt="2" width={200} onClick={onPaymentRequest}>Pay & Book a Virtual Play Date</Button>
+                                        ) : (
+                                            <Button colorScheme='grey' disabled _hover={{ cursor: "none" }} bg={"grey"} fontSize="12px" mt="2" width={200}>Pay & Book a Virtual Play Date</Button>
+                                        )}
+
                                     </Flex>
                                 </Stack>
                             </form>

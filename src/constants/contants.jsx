@@ -12,3 +12,5 @@ export const staticFilesUrl="https://petbasket.azurewebsites.net/uploads/";
 // export const staticFilesUrl="https://localhost:7180/uploads/";
 
 export const RAZOR_KEY="rzp_test_zLSxkz4wgdyGgN";
+
+export const webexMeetingBaseUrl="https://webexapis.com/v1";

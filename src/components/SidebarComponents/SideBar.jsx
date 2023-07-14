@@ -36,7 +36,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <Box bg="brand.300" w="300px" h="100vh" textAlign={'center'} borderRadius="0px 30px 30px 0px" display={{ base: "none", md: "block" }}>
+      <Box bg={`linear-gradient(90deg, #e7bffc, #ebc8fd, #eed2fd, #f1dbfd)`} w="300px" h="100vh" textAlign={'center'} borderRadius="0px 30px 30px 0px" display={{ base: "none", md: "block" }}>
         <VStack spacing="20px" align="stretch" p={8}>
           <Text fontSize={20} fontWeight={"bolder"} textAlign={'center'} fontFamily="cursive"  mb={"30px"}>Pet Basket</Text>
           <SideBarElement name="Home" iconName={FaHome} onClick={()=> navigate("/")}></SideBarElement>

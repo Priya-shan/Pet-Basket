@@ -106,6 +106,7 @@ function VpdDetailsModal({ closeModal, post }) {
         const orderResponse = await addOrder(orderModel);
         console.log(orderResponse);
         Toast("Order placed Successfully !");
+        
         handleClose();
     };
 
