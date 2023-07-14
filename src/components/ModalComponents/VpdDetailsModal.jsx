@@ -32,7 +32,7 @@ function VpdDetailsModal({ closeModal, post }) {
     };
     async function createMeeting(startTime, endTime) {
         try {
-            const accessToken = 'OTdhNDU0ZDAtY2ZiNS00MzhiLWExZjktYjYxZjJmZWZjMGFlYjk2MzQwZTgtMGRj_P0A1_f0bfbd13-cb41-469d-a2f8-31cc90ec7f7d'; // Replace with your access token
+            const accessToken = 'MmMwMGFjOWMtNWI3Yy00ZmU3LTlkOTItMjI5M2ZmNDU3NDgyYWZmMjVhZWEtMGJj_P0A1_f0bfbd13-cb41-469d-a2f8-31cc90ec7f7d';
             const meetingData = {
                 title: 'My Meeting',
                 start: startTime,
