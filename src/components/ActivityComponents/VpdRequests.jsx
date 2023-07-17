@@ -8,6 +8,7 @@ import { Box, Flex, Text, Image, IconButton, Badge, useDisclosure, Modal, ModalO
 import EmptyComponent from './EmptyComponent';
 import { fetchPostById } from '../../api/posts';
 import Post from '../IndividualComponents/Post';
+import { useNavigate } from 'react-router-dom';
 function VpdRequests() {
   const [authStatuss, setAuthStatus] = useRecoilState(authStatus);
   const [data, setData] = useState([]);
@@ -17,6 +18,7 @@ function VpdRequests() {
     await fetchPostData(postId);
     onOpen();
   };
+  const navigate = useNavigate();
   async function fetchPostData(postId) {
     const response = await fetchPostById(postId);
     setPostData(response.data);
@@ -78,7 +80,7 @@ function VpdRequests() {
                   
                 >
                   <Box flex="1" pt={2} display="flex" justifyContent="center" mx={3}>
-                    <Badge colorScheme="purple" >12-03-2023</Badge>
+                    <Badge colorScheme="purple" >14-07-2023</Badge>
                   </Box>
                   <Box flex="1" pt={2}  mx={3}display="flex" justifyContent="center">
                     <Badge colorScheme="purple">
@@ -107,11 +109,13 @@ function VpdRequests() {
                       onClick={() => { handleViewDetails(item.postId) }}
                     />
                   </Box>
+                  {/* <Text>{item.meetingLink}</Text> */}
                   <Box flex="1" display={'flex'} justifyContent={'center'} pt={2}>
                     <IconButton
                       aria-label="View Details"
                       icon={<BsFillCameraVideoFill />}
                       colorScheme="brand"
+                      onClick={()=>{window.open(item.meetingLink, '_blank')}}
                       w={2}
                     />
                   </Box>

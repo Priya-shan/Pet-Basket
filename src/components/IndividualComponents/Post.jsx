@@ -14,7 +14,7 @@ import { addLike, fetchLikes, deleteLike } from '../../api/likes';
 import { addSavedPost, fetchSavedPosts, deleteSavedPost } from '../../api/savedpost';
 import CommentDrawer from '../DrawerComponents/CommentDrawer';
 import { fetchComments } from '../../api/comments';
-
+import {toast} from "react-toastify";
 function Post(props) {
   const {
     post,
@@ -50,6 +50,7 @@ function Post(props) {
     console.log("post delete ",post.postId);
     const deleteResponse = await deletePost(post.postId);
     console.log(deleteResponse);
+    toast("Post Deleted Successfully !");
     setPostsState(!postsStatee);
   }
 
