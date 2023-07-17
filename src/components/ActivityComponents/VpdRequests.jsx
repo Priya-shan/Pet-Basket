@@ -89,7 +89,7 @@ function VpdRequests() {
                   </Box>
                   <Box flex="1" pt={2} mx={3} display="flex" justifyContent="center">
                     <Badge colorScheme="purple">
-                      {item.requesterUserName === authStatuss.userName ? 'Upcoming' : 'Completed'}
+                      {item.requesterUserName === authStatuss.userName ? 'Upcoming' : 'Upcoming'}
                     </Badge>
                   </Box>
                 </Flex>
