@@ -34,7 +34,7 @@ function VpdDetailsModal({ closeModal, post }) {
         try {
             const accessToken = 'Mjk5OTQ5YzAtNDdiZS00NDZiLTk4NTItZjg2ZjRjZmUzYWZhYTE3NDg5ZDQtNjNh_P0A1_f0bfbd13-cb41-469d-a2f8-31cc90ec7f7d';
             const meetingData = {
-                title: 'My Meeting',
+                title: 'Virtual Play Date Scheduled !',
                 start: startTime,
                 end: endTime,
             };

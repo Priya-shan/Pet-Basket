@@ -57,6 +57,9 @@ function VpdDetailsModal({ closeModal, post }) {
                 currency: "INR",
                 name: "Pet Basket",
                 description: "Transaction",
+                theme: {
+                    color: "#ebc8fd", // Set the desired color here
+                  },
                 handler: async function (res) {
                     await placeOrder();
                 },
